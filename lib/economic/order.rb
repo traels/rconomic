@@ -2,7 +2,8 @@ require 'economic/entity'
 
 module Economic
   class Order < Entity
-    has_properties :number,
+    has_properties :id,
+      :number,
       :debtor_handle,
       :debtor_name,
       :debtor_address,
@@ -37,6 +38,9 @@ module Economic
       :text_line2
 
     defaults(
+      :id => 0,
+      :is_sent => false,
+      :is_archived => false,
       :date => Time.now,
       :term_of_payment_handle => nil,
       :due_date => nil,
@@ -113,6 +117,8 @@ module Economic
       date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
       to_hash = Proc.new { |handle| handle.to_hash }
       [
+        ["Handle", :handle, to_hash],
+        ["Id", :id, nil, :required],
         ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
         ["Number", :number],
         ["DebtorName", :debtor_name],
@@ -135,8 +141,8 @@ module Economic
         ['TextLine1', :text_line1],
         ['TextLine2', :text_line2],
         ["AttentionHandle", :attention_handle],
-        ["IsArchived", :is_archived],
-        ["IsSent", :is_sent],
+        ["IsArchived", :is_archived, Proc.new { |v| v || "false" }, :required],
+        ["IsSent", :is_sent, Proc.new { |v| v || "false" }, :required],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
