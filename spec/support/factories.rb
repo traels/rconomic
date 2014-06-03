@@ -35,6 +35,23 @@ def make_current_invoice(properties = {})
   invoice
 end
 
+def make_order(properties = {})
+  order = make_debtor.orders.build
+
+  # Assign specified properties
+  properties.each { |key, value|
+    order.send("#{key}=", value)
+  }
+
+  # Use defaults for the rest of the properties
+  order.date ||= Time.now
+  order.due_date ||= Time.now + 15
+  order.exchange_rate ||= 100
+  order.is_vat_included ||= false
+
+  order
+end
+
 def make_debtor(properties = {})
   debtor = Economic::Debtor.new
 

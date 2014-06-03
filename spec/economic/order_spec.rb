@@ -19,7 +19,7 @@ describe Economic::Order do
   end
 
   describe ".key" do
-    it "should == :invoice" do
+    it "should == :order" do
       expect(Economic::Order.key).to eq(:order)
     end
   end

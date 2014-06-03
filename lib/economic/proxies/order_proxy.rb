@@ -8,10 +8,25 @@ module Economic
     include FindByHandleWithNumber
 
     def find(handle)
-      if handle.is_a?(Hash)
-        super handle
-      else
-        super({:id => handle})
+      handle = Entity::Handle.build(:id => handle) unless handle.is_a?(Entity::Handle)
+      super(handle)
+    end
+
+  private
+
+    # Initialize properties in invoice with values from owner
+    def initialize_properties_with_values_from_owner(order)
+      if owner.is_a?(Debtor)
+        order.debtor = owner
+
+        order.debtor_name         ||= owner.name
+        order.debtor_address      ||= owner.address
+        order.debtor_postal_code  ||= owner.postal_code
+        order.debtor_city         ||= owner.city
+
+        order.term_of_payment_handle  ||= owner.term_of_payment_handle
+        order.layout_handle           ||= owner.layout_handle
+        order.currency_handle         ||= owner.currency_handle
       end
     end
   end

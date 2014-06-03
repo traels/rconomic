@@ -74,8 +74,9 @@ module Economic
     end
 
     def orders
-      return [] if self.handle.empty?
-      @orders ||= DebtorProxy.new(self).get_orders(self.handle)
+      @orders ||= OrderProxy.new(self)
+#      return [] if self.handle.empty?
+#      @orders ||= DebtorProxy.new(self).get_orders(self.handle)
     end
 
     protected
