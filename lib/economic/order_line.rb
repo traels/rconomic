@@ -47,6 +47,18 @@ module Economic
       @order ||= session.orders.find(order_handle)
     end
 
+    def order=(order)
+      @order = order
+      self.order_handle = order.handle
+    end
+
+    def product=(product)
+      self.product_handle = product.handle
+      self.unit_handle = product.unit_handle
+      self.unit_net_price = product.sales_price
+      self.unit_cost_price = product.cost_price
+    end
+
     protected
 
     def fields
