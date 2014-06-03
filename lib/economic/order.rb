@@ -96,6 +96,19 @@ module Economic
       @lines ||= OrderLineProxy.new(self)
     end
 
+    def save
+      lines = self.lines
+
+      result = super
+      self.id = result[:id].to_i
+
+      lines.each do |order_line|
+        invoice_line.session = session
+        invoice_line.order = self
+        invoice_line.save
+      end
+    end
+
     # Returns the PDF version of Invoice as a String.
     #
     # To get it as a file you can do:
