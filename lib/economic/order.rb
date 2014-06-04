@@ -103,9 +103,9 @@ module Economic
       self.id = result[:id].to_i
 
       lines.each do |order_line|
-        invoice_line.session = session
-        invoice_line.order = self
-        invoice_line.save
+        order_line.session = session
+        order_line.order = self
+        order_line.save
       end
     end
 
