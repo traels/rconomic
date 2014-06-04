@@ -16,6 +16,14 @@ describe Economic::Order do
     it "should return a proxy owned by session" do
       expect(subject.proxy.session).to eq(session)
     end
+
+    describe "enumerability" do
+      it "should be lazy loaded" do
+        mock_request(:order_get_all, nil, :multiple)
+        mock_request('Order_GetDataArray',{"entityHandles"=>{"OrderHandle"=>[{"Id"=>0}, {"Id"=>1}]}}, :multiple)
+        expect(subject.proxy.first).to be_instance_of(Economic::Order)
+      end
+    end
   end
 
   describe ".key" do

@@ -7,6 +7,15 @@ module Economic
     include FindByDateInterval
     include FindByHandleWithNumber
 
+    def each
+      if owner.is_a?(Debtor)
+        @items = DebtorProxy.new(owner).get_orders(owner.handle)
+      else
+        all
+      end
+      super
+    end
+
     def find(handle)
       if handle.is_a?(Hash)
         super handle
