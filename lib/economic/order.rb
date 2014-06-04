@@ -110,6 +110,12 @@ module Economic
       end
     end
 
+    def register_as_sent
+      response = request(:register_as_sent, {
+        "orderHandle" => handle.to_hash,
+      })
+    end
+
     # Returns the PDF version of Invoice as a String.
     #
     # To get it as a file you can do:
