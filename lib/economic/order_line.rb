@@ -57,6 +57,7 @@ module Economic
       self.unit_handle = product.unit_handle
       self.unit_net_price = product.sales_price
       self.unit_cost_price = product.cost_price
+      self.description = product.name
     end
 
     protected
