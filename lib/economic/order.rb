@@ -41,6 +41,7 @@ module Economic
       :id => 0,
       :is_sent => false,
       :is_archived => false,
+      :number => 0,
       :date => Time.now,
       :term_of_payment_handle => nil,
       :due_date => nil,
@@ -130,7 +131,7 @@ module Economic
       date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
       to_hash = Proc.new { |handle| handle.to_hash }
       [
-        ["Handle", :handle, to_hash],
+        ["Handle", :handle, Proc.new { |handle| handle.to_hash([:id]) }],
         ["Id", :id, nil, :required],
         ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
         ["Number", :number],
@@ -147,7 +148,7 @@ module Economic
         ["DueDate", :due_date, date_formatter, :required],
         ["CurrencyHandle", :currency_handle, to_hash],
         ["ExchangeRate", :exchange_rate],
-        ["IsVatIncluded", :is_vat_included, nil, :required],
+        ["IsVatIncluded", :is_vat_included, Proc.new { |v| v || "false" }, :required],
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
