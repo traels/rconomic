@@ -108,6 +108,7 @@ module Economic
         order_line.order = self
         order_line.save
       end
+      get_data
     end
 
     def register_as_sent
