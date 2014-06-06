@@ -9,7 +9,8 @@ module Economic
   #
   # See Economic::Order for usage example
   class OrderLine < Entity
-    has_properties :number,
+    has_properties :id,
+      :number,
       :order_handle,
       :description,
       :delivery_date,
@@ -24,6 +25,8 @@ module Economic
       :margin_as_percent
 
     defaults(
+      :id => 0,
+      :number => 0,
       :order_handle => nil,
       :description => nil,
       :delivery_date => nil,
@@ -39,7 +42,7 @@ module Economic
     )
 
     def handle
-      @handle || Handle.build(:number => number)
+      @handle || Handle.build(:number => number, :id => id)
     end
 
     def order
@@ -65,7 +68,9 @@ module Economic
     def fields
       to_hash = Proc.new { |h| h.to_hash }
       [
-        ["Number", :number, Proc.new { 0 }, :required], # Doesn't seem to be used
+        ["Handle", :handle, to_hash],
+        ["Id", :handle, Proc.new { |handle| handle.id.to_i }, :required],
+        ["Number", :handle, Proc.new { |handle| handle.number.to_i }, :required],
         ["OrderHandle", :order_handle, to_hash],
         ["Description", :description],
         ["DeliveryDate", :delivery_date, nil, :required],

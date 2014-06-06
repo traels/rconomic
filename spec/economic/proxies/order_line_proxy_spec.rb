@@ -82,7 +82,7 @@ describe Economic::OrderLineProxy do
     it "can be iterated over" do
       line = Economic::OrderLine.new
       subject << line
-      expect(subject.all? { |l| l.is_a?(Economic::OrderLine) }).to be_true
+      expect(subject.all? { |l| l.is_a?(Economic::OrderLine) }).to be_truthy
     end
   end
 end

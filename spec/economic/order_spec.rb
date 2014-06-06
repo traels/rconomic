@@ -26,7 +26,7 @@ describe Economic::Order do
 
   describe "#pdf" do
     it "gets PDF data from API" do
-      mock_request('Order_GetPdf', {'orderHandle' => {'Number' => 512}}, :success)
+      mock_request('Order_GetPdf', {'orderHandle' => {'Id' => 0, 'Number' => 512}}, :success)
       subject.pdf
     end
 
