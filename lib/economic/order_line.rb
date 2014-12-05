@@ -25,8 +25,8 @@ module Economic
       :margin_as_percent
 
     defaults(
-      :id => 0,
-      :number => 0,
+      :id => nil,
+      :number => nil,
       :order_handle => nil,
       :description => nil,
       :delivery_date => nil,
@@ -43,11 +43,6 @@ module Economic
 
     def handle
       @handle || Handle.build(:number => number, :id => id)
-    end
-
-    def ==(other)
-      return false if other.nil?
-      self.product_handle == other.product_handle && other.is_a?(self.class)
     end
 
     def order
