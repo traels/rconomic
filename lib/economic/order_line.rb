@@ -45,6 +45,11 @@ module Economic
       @handle || Handle.build(:number => number, :id => id)
     end
 
+    def ==(other)
+      return false if other.nil?
+      self.product_handle == other.product_handle && other.is_a?(self.class)
+    end
+
     def order
       return nil unless order_handle
       @order ||= session.orders.find(order_handle)
